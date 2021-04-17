@@ -1,0 +1,12 @@
+body {
+    font-family: 'Coda Caption', sans-serif;
+}
+
+header{
+    text-align: center;
+    background-color: green;
+}
+
+h3 {
+    font-size: medium;
+}
