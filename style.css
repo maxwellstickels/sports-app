@@ -45,7 +45,9 @@ nav a {
     margin-left: 10px;
 }
 
-.player-stats {
+.player-stats,
+.team-stats,
+.game-results {
     margin-top: 10px;
     margin-left: 10px;
 }
@@ -56,6 +58,15 @@ nav a {
     margin: 20px;
 }
 
+
+.submit-player {
+    display: flex;
+    flex-direction: row;
+}
+
+.highlights {
+    text-align: center;
+}
 /* for visual appeal */
 @media only screen and (max-width: 1000px) {
     .top {

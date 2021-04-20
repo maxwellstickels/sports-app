@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,14 +10,14 @@
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Coda+Caption:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"/>
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
     <header>
-        <h1>BaseballRUs</h1>
-        <h3>You want baseball? We got baseball. Welcome to BaseballRUs, your number one spot for player stats, team
+        <h1>BaseBall 'R' Us</h1>
+        <h3>You want baseball? We got baseball. Welcome to BaseBall 'R' Us, your number one spot for player stats, team
             stats, and game results at the click of a mouse.</h3>
         <nav>
             <ul>
@@ -24,40 +25,62 @@
                     <a href="#player-stats">Player Stats</a>
                 </li>
                 <li>
-                    <a href="#">Team Stats</a>
+                    <a href="#team-stats">Team Stats</a>
                 </li>
                 <li>
-                    <a href="#">Game Results</a>
+                    <a href="#game-results">Game Results</a>
                 </li>
             </ul>
         </nav>
     </header>
     <main>
         <div class="top">
-        <section class="welcome-section">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/GfeGAct-wN4"
+            <section class="welcome-section">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/GfeGAct-wN4"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </section>
+            <section class="opening-paragraph">
+                <h2>Let the Games Begin!</h2>
+                <p>It's finally here, baseball fans! It's Opening Season! MLB is back with a bang, starting Thursday,
+                    April
+                    1st
+                    with the Toronto Blue Jays taking on the New York Yankees. It's sure to be a knockout so don't miss
+                    it!
+                    Keep
+                    it here on BaseBall 'R' Us for all the latest stats and results as the season progresses! You want
+                    baseball?
+                    Well, you've come to the right place.</p>
+            </section>
+        </div>
+
+        <section class="player-stats" id="player-stats">
+            <h2><i class="fas fa-baseball-ball" style="font-size: 30px;"></i>Player Stats</i></h2>
+            <p>Looking for your favorite player's stats? Use the search bar to look for up-to-date information on any
+                player in the league!</p>
+            <div class="submit-player">
+                <textarea id="name-search" placeholder="Search for an MLB player:"></textarea>
+                <button id="submit-btn">Submit</button>
+            </div>
+            <section id="player-stats-display"></section>
+        </section>
+        <section class="team-stats" id="team-stats">
+            <h2><i class="fas fa-baseball-ball" style="font-size: 30px;"></i>Team Stats</i></h2>
+            <p>We've got all the latest stats on your favorite teams to keep you in the know.</p>
+        </section>
+        <section class="game-results" id="game-results">
+            <h2><i class="fas fa-baseball-ball" style="font-size: 30px;"></i>Game Results</i></h2>
+            <p>Missed the game? No problem! Click here to check out game results from this week and last!</p>
+        </section>
+        <section class="highlights">
+            <h2>Highlights from Last Season</h2>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/Wog4Z_wkppw"
                 title="YouTube video player" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-            </iframe>
+                allowfullscreen></iframe>
         </section>
-        <section class="opening-paragraph">
-            <h2>Let the Games Begin!</h2>
-            <p>It's finally here, baseball fans! It's Opening Season! MLB is back with a bang, starting Thursday, April
-                1st
-                with the Toronto Blue Jays taking on the New York Yankees. It's sure to be a knockout so don't miss it!
-                Keep
-                it here on BaseballRUs for all the latest stats and results as the season progresses! You want baseball?
-                Well, you've come to the right place.</p>
-        </section>
-    </div>
-
-    <section class="player-stats" id="player-stats">
-        <h2><i class="fas fa-baseball-ball" style="font-size: 30px;"></i>Player Stats</i></h2>
-        <textarea id="name-search" placeholder="Search for an MLB player:"></textarea>
-        <button id="submit-btn">Submit</button>
-        <section id="player-stats-display"></section>
-    </section>
 
     </main>
 
