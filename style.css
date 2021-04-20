@@ -64,6 +64,9 @@ nav a {
     flex-direction: row;
 }
 
+.highlights {
+    text-align: center;
+}
 /* for visual appeal */
 @media only screen and (max-width: 1000px) {
     .top {
