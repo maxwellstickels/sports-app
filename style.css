@@ -59,7 +59,8 @@ nav a {
 }
 
 
-.submit-player {
+.submit-player,
+.submit-team {
     display: flex;
     flex-direction: row;
 }
