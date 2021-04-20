@@ -34,6 +34,24 @@ nav a {
     text-decoration: none;
 }
 
-section {
-   display: inline;
+.top {
+    display: flex;
+    flex-direction: row;
+}
+
+.welcome-section {
+    display: inline;
+    float: left;
+    margin-left: 10px;
+}
+
+.player-stats {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.opening-paragraph {
+    float: right;
+    padding-right: 20px;
+    margin: 20px;
 }
