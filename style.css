@@ -46,8 +46,7 @@ nav a {
 }
 
 .player-stats,
-.team-stats,
-.game-results {
+.team-stats {
     margin-top: 10px;
     margin-left: 10px;
 }
