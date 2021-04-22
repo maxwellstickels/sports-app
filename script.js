@@ -34,8 +34,11 @@ function fetchPlayerStats(id) {
             playerLink.textContent = "#" + jerseyNum + ": " + info2.name_first + nickName + info2.name_last;
             playerName.appendChild(playerLink);
         }
+        var teamName = document.createElement('p');
+        teamName.textContent = "Team: " + info2.team_name + " " + "Position: " + info2.primary_position_txt;
         // Adds player info to screen
         playerResults.appendChild(playerName);
+        playerResults.appendChild(teamName);
         return data2;
     });
 }
