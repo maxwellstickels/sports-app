@@ -6,6 +6,8 @@ var info2; // for getting player team affiliation, jersey #, etc. by ID
 
 // Given a player ID, renders information to screen corresponding that the player with that ID.
 function fetchPlayerStats(id) {
+    var playerCard = document.createElement('section'); // playerCard is border around all player info
+    playerCard.setAttribute("class", "player-card");
     fetch("https://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id='" + id + "'").then(function(response2) {
         return response2.json();}).then(function(data2) {
         info2 = data2.player_info.queryResults.row;
@@ -37,18 +39,23 @@ function fetchPlayerStats(id) {
         var teamName = document.createElement('p');
         teamName.textContent = "Team: " + info2.team_name + " " + "Position: " + info2.primary_position_txt;
         // Adds player info to screen
-        playerResults.appendChild(playerName);
-        playerResults.appendChild(teamName);
+        playerCard.appendChild(playerName);
+        playerCard.appendChild(teamName);
+        playerResults.appendChild(playerCard);
         return data2;
+    });
+    fetch("https://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id='" + id + "'").then(function(response3) {
+        return response3.json();}).then(function(data3) {
+            console.log(data3);
+            return data3;
     });
 }
 
-function displayResults() {
+function displayPlayerResults() {
     if (nameSearch.value.length > -1) { // This condition sets minimum input length requirement - set it to -1 if you don't care about minimum length.
         playerResults.innerHTML = ""; // Clears player results
         fetch("https://lookup-service-prod.mlb.com/json/named.search_player_all.bam?sport_code='mlb'&active_sw='Y'&name_part='" + nameSearch.value + "%25'").then(function(response) {
             return response.json();}).then(function(data) {
-            console.log(data);
             if (data.search_player_all.queryResults.totalSize != "0") {
                     info = data.search_player_all.queryResults.row;
                     if (info[0] === undefined) { // Single result does not come in an array - check for this edge case, otherwise single results will not be logged.
@@ -65,4 +72,4 @@ function displayResults() {
     }
 }
 
-submitBtn.addEventListener("click", displayResults);
+submitBtn.addEventListener("click", displayPlayerResults);
