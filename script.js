@@ -102,13 +102,14 @@ function displayPlayerResults() {
 
 function displayTeamResults() {
     var teamName = nameSearchTeam.value.trim();
-    if (teamName.length > 0) { // This condition sets minimum input length requirement - set it to -1 if you don't care about minimum length.
+    if (teamName.length > 2) { // This condition sets minimum input length requirement - set it to -1 if you don't care about minimum length.
         teamResults.innerHTML = ""; // Clears team results
         fetch("https://lookup-service-prod.mlb.com/json/named.team_all_season.bam?sport_code='mlb'&all_star_sw='N'&sort_order=name_asc&season='2021'").then(function(response) {
             return response.json();}).then(function(data) {
             if (data.team_all_season != undefined) {
                 infoT = data.team_all_season.queryResults.row;
                 for (var i = 0; i < infoT.length; i++) {
+                    // Checks if input is part of any possible name for the team
                     if (infoT[i].name_display_full.toLowerCase().includes(teamName) || infoT[i].name_display_long.toLowerCase().includes(teamName) || infoT[i].name_display_short.toLowerCase().includes(teamName) || infoT[i].name_display_brief.toLowerCase().includes(teamName) || infoT[i].mlb_org_abbrev.toLowerCase().includes(teamName)) {
                         console.log(infoT[i].name_display_full);
                     }
