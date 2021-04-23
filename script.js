@@ -7,7 +7,8 @@ var info2; // for getting player team affiliation, jersey #, etc. by ID
 // Given a player ID, renders information to screen corresponding that the player with that ID.
 function fetchPlayerStats(id) {
     var playerCard = document.createElement('section'); // playerCard is border around all player info
-    playerCard.setAttribute("class", "player-card");
+    playerCard.setAttribute("class", "card");
+    playerCard.setAttribute("style", "margin: 10px 0; width: 50%;");
     var playerBatting = document.createElement('p');
     var playerPitching = document.createElement('p');
     fetch("https://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id=\'" + id + "\'").then(function(response2) {
