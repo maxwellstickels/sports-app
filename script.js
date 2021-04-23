@@ -8,6 +8,8 @@ var info2; // for getting player team affiliation, jersey #, etc. by ID
 function fetchPlayerStats(id) {
     var playerCard = document.createElement('section'); // playerCard is border around all player info
     playerCard.setAttribute("class", "player-card");
+    var playerBatting = document.createElement('p');
+    var playerPitching = document.createElement('p');
     fetch("https://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id=\'" + id + "\'").then(function(response2) {
         return response2.json();}).then(function(data2) {
         info2 = data2.player_info.queryResults.row;
@@ -38,31 +40,30 @@ function fetchPlayerStats(id) {
         }
         var teamName = document.createElement('p');
         teamName.textContent = "Team: " + info2.team_name + " " + "Position: " + info2.primary_position_txt;
-        // Adds player info to screen
-        playerCard.appendChild(playerName);
-        playerCard.appendChild(teamName);
-        return data2;
-    });
-    fetch("https://lookup-service-prod.mlb.com/json/named.sport_career_hitting.bam?league_list_id='mlb'&game_type='R'&player_id=\'" + id + "\'").then(function(response3) {
+        // Adds batting stats to screen
+        fetch("https://lookup-service-prod.mlb.com/json/named.sport_career_hitting.bam?league_list_id='mlb'&game_type='R'&player_id=\'" + id + "\'").then(function(response3) {
         return response3.json();}).then(function(data3) {
                 var info3 = data3.sport_career_hitting.queryResults.row;
                 if (info3 != undefined) {
-                    var playerBatting = document.createElement('p');
                     playerBatting.innerHTML = "<b>Batting Stats</b> - " + info3.hr + " Home Runs, " + info3.rbi + " RBIs, " + info3.avg + " Batting Average"; 
-                    playerCard.appendChild(playerBatting);
                 }
             return data3;
-    });
-    fetch("https://lookup-service-prod.mlb.com/json/named.sport_career_pitching.bam?league_list_id='mlb'&game_type='R'&player_id=\'" + id + "\'").then(function(response4) {
-        return response4.json();}).then(function(data4) {
-            var info4 = data4.sport_career_pitching.queryResults.row;
-            if (info4 != undefined) {
-                var playerPitching = document.createElement('p');
-                var tempText = "<b>Pitching Stats</b> - " + info4.era + " ERA, " + info4.so + " Strikeouts, " + info4.era + " ERA"; 
-                playerPitching.innerHTML = tempText;
-                playerCard.appendChild(playerPitching);
-            }
-            return data4;
+        });
+        fetch("https://lookup-service-prod.mlb.com/json/named.sport_career_pitching.bam?league_list_id='mlb'&game_type='R'&player_id=\'" + id + "\'").then(function(response4) {
+            return response4.json();}).then(function(data4) {
+                var info4 = data4.sport_career_pitching.queryResults.row;
+                if (info4 != undefined) {
+                    var tempText = "<b>Pitching Stats</b> - " + info4.era + " ERA, " + info4.so + " Strikeouts, " + info4.era + " ERA"; 
+                    playerPitching.innerHTML = tempText;
+                }
+                return data4;
+        });
+        // Adds player info to screen
+        playerCard.appendChild(playerName);
+        playerCard.appendChild(teamName);
+        playerCard.appendChild(playerBatting);
+        playerCard.appendChild(playerPitching);
+        return data2;
     });
     playerResults.appendChild(playerCard);
 }
