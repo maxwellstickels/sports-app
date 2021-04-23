@@ -47,6 +47,9 @@ function fetchPlayerStats(id) {
                 if (info3 != undefined) {
                     playerBatting.innerHTML = "<b>Batting Stats</b> - " + info3.hr + " Home Runs, " + info3.rbi + " RBIs, " + info3.avg + " Batting Average"; 
                 }
+                else {
+                    playerBatting.innerHTML = "Batting Stats - None Available";
+                }
             return data3;
         });
         fetch("https://lookup-service-prod.mlb.com/json/named.sport_career_pitching.bam?league_list_id='mlb'&game_type='R'&player_id=\'" + id + "\'").then(function(response4) {
@@ -55,6 +58,9 @@ function fetchPlayerStats(id) {
                 if (info4 != undefined) {
                     var tempText = "<b>Pitching Stats</b> - " + info4.era + " ERA, " + info4.so + " Strikeouts, " + info4.era + " ERA"; 
                     playerPitching.innerHTML = tempText;
+                }
+                else {
+                    playerPitching.innerHTML = "Pitching Stats - None Available";
                 }
                 return data4;
         });
