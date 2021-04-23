@@ -38,7 +38,7 @@ function fetchPlayerStats(id) {
             playerLink.textContent = "#" + jerseyNum + ": " + info2.name_first + nickName + info2.name_last;
             playerName.appendChild(playerLink);
         }
-        var teamName = document.createElement('p');
+        var teamName = document.createElement('ol');
         teamName.textContent = "Team: " + info2.team_name + " " + "Position: " + info2.primary_position_txt;
         // Adds batting stats to screen
         fetch("https://lookup-service-prod.mlb.com/json/named.sport_career_hitting.bam?league_list_id='mlb'&game_type='R'&player_id=\'" + id + "\'").then(function(response3) {
