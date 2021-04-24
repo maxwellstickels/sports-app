@@ -118,13 +118,13 @@ function fetchPlayerStats(id) {
     playerResults.appendChild(playerCard);
 }
 
-function displayPlayerResults() {
-    if (nameSearch.value.length > 0) { // This condition sets minimum input length requirement - set it to -1 if you don't care about minimum length.
-        playerSearchHistory.unshift(nameSearch.value);
+function displayPlayerResults(playerName) {
+    if (playerName.length > 0) { // This condition sets minimum input length requirement - set it to -1 if you don't care about minimum length.
+        playerSearchHistory.unshift(playerName);
         localStorage.setItem("playerSearchHistory", JSON.stringify(playerSearchHistory));
         showSearchHistories();
         playerResults.innerHTML = ""; // Clears player results
-        fetch("https://lookup-service-prod.mlb.com/json/named.search_player_all.bam?sport_code='mlb'&active_sw='Y'&name_part='" + nameSearch.value + "%25'").then(function(response) {
+        fetch("https://lookup-service-prod.mlb.com/json/named.search_player_all.bam?sport_code='mlb'&active_sw='Y'&name_part='" + playerName + "%25'").then(function(response) {
             return response.json();}).then(function(data) {
             if (data.search_player_all.queryResults.totalSize != "0") {
                     info = data.search_player_all.queryResults.row;
@@ -142,10 +142,9 @@ function displayPlayerResults() {
     }
 }
 
-function displayTeamResults() {
-    var teamName = nameSearchTeam.value.trim().toLowerCase();
+function displayTeamResults(teamName) {
     if (teamName.length > 0) { // This condition sets minimum input length requirement - set it to -1 if you don't care about minimum length.
-        teamSearchHistory.unshift(nameSearchTeam.value);
+        teamSearchHistory.unshift(teamName);
         localStorage.setItem("teamSearchHistory", JSON.stringify(teamSearchHistory));
         showSearchHistories();
         teamResults.innerHTML = ""; // Clears team results
@@ -202,6 +201,14 @@ function displayTeamResults() {
 
 submitBtn.addEventListener("click", displayPlayerResults);
 submitBtnTeam.addEventListener("click", displayTeamResults);
+submitBtn.addEventListener("click", function() {
+    var playerName = nameSearch.value;
+    displayPlayerResults(playerName);
+});
+submitBtnTeam.addEventListener("click", function() {
+    var teamName = nameSearchTeam.value.trim().toLowerCase();
+    displayTeamResults(teamName);
+});
 videoBtn.addEventListener("click", getVideo);
 showSearchHistories();
 
@@ -209,19 +216,31 @@ function showSearchHistories() {
     playerDropDown.innerHTML = "";
     teamDropDown.innerHTML = "";
     var playerDefaultOption = document.createElement("option");
+        playerDefaultOption.setAttribute("value", "");
         playerDefaultOption.textContent = "Search History";
         playerDropDown.appendChild(playerDefaultOption);
     var teamDefaultOption = document.createElement("option");
+        teamDefaultOption.setAttribute("value", "");
         teamDefaultOption.textContent = "Search History"
         teamDropDown.appendChild(teamDefaultOption);    
     for( var i = 0; i < playerSearchHistory.length; i++) {
         var playerOption = document.createElement("option");
+        playerOption.setAttribute("value", playerSearchHistory[i]);
         playerOption.textContent = playerSearchHistory[i];
         playerDropDown.appendChild(playerOption);
     }
     for( var i = 0; i < teamSearchHistory.length; i++) {
         var teamOption = document.createElement("option");
+        teamOption.setAttribute("value", teamSearchHistory[i]);
         teamOption.textContent = teamSearchHistory[i];
         teamDropDown.appendChild(teamOption);
     }
 }
+
+playerDropDown.addEventListener("change", function(event) {
+    displayPlayerResults(event.target.value);
+})
+
+teamDropDown.addEventListener("change", function(event) {
+    displayTeamResults(event.target.value);
+})
