@@ -1,3 +1,5 @@
+// YouTube API Key: AIzaSyDW3t-myU9L1Q-P2Mw8SqbKDS2WSdbnMX0
+
 var nameSearch = document.getElementById("name-search");
 var nameSearchTeam = document.getElementById("team-search");
 var submitBtn = document.getElementById("submit-btn");
@@ -6,6 +8,14 @@ var playerResults = document.getElementById("player-stats-display");
 var teamResults = document.getElementById("team-stats-display");
 var info; // for getting player ID by name
 var info2; // for getting player team affiliation, jersey #, etc. by ID
+
+function youtubesetup() {
+    gapi.client.setApiKey("AIzaSyDW3t-myU9L1Q-P2Mw8SqbKDS2WSdbnMX0");
+    gapi.client.load("youtube", "v3", function() {
+        // console.log("Success!");
+    });
+}
+
 
 // Given a player ID, renders information to screen corresponding that the player with that ID.
 function fetchPlayerStats(id) {
@@ -109,11 +119,9 @@ function displayTeamResults() {
             return response.json();}).then(function(data) {
             if (data.team_all_season != undefined) {
                 infoT = data.team_all_season.queryResults.row;
-                console.log(infoT);
                 for (var i = 0; i < infoT.length; i++) {
                     // Checks if input is part of any possible name for the team
                     if (infoT[i].name_display_full.toLowerCase().includes(teamName) || infoT[i].name_display_long.toLowerCase().includes(teamName) || infoT[i].name_display_short.toLowerCase().includes(teamName) || infoT[i].name_display_brief.toLowerCase().includes(teamName) || infoT[i].mlb_org_abbrev.toLowerCase().includes(teamName)) {
-                        console.log(infoT[i].name_display_full);
                         var teamCard = document.createElement('section'); // playerCard is border around all player info
                         teamCard.setAttribute("class", "card");
                         teamCard.setAttribute("style", "margin: 10px 0; width: 90%;");
@@ -147,7 +155,6 @@ function displayTeamResults() {
                         }
                         teamCard.appendChild(teamNameDisplay);
                         teamCard.appendChild(teamPhone);
-                        console.log(teamPhone.textContent);
                         teamCard.appendChild(teamVenue);
                         teamResults.appendChild(teamCard);
                     }
