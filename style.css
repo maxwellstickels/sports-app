@@ -51,6 +51,11 @@ nav a {
     margin-left: 10px;
 }
 
+#submit-btn,
+#submit-btn-team {
+    margin-left: 3px;
+}
+
 .opening-paragraph {
     float: right;
     padding-right: 20px;
@@ -61,12 +66,7 @@ nav a {
 .submit-player,
 .submit-team {
     display: flex;
-    flex-direction: row
-}
-
-#submit-btn,
-#submit-btn-team {
-    margin-left: 3px;
+    flex-direction: row;
 }
 
 .highlights {
@@ -79,60 +79,37 @@ nav a {
 /* for visual appeal */
 @media only screen and (max-width: 1000px) {
     .top {
-        display: flex;
         flex-direction: column;
     }
-}
-
-/* ipad/tablet view */
-@media only screen and (max-width: 768px) {
-    header{
-        text-align: center;
-        background-color: green;
-        width: 100%;
-    }
-    
+  }
+  
+  /* ipad/tablet view */
+  @media only screen and (max-width: 768px) {
     h3 {
         font-size: 10px;
     }
-    
-    nav {
-        background-color: greenyellow;
-        font-size: 20px;
-    }
   
     .top {
-        display: flex;
         flex-direction: column;
     }
-
+  
     iframe {
         width: 500px;
         height: 270px;
     }
     
-    .opening-paragraph {
-        padding-right: 20px;
-        margin: 20px;
-    }
-
-}
-
-/* iphone/mobile view */
-@media only screen and (max-width: 420px) {
+  }
+  
+  /* iphone/mobile view */
+  @media only screen and (max-width: 420px) {
     nav {
-        background-color: greenyellow;
         font-size: 15px;
     }
     .top {
-        display: flex;
         flex-direction: column;
     }
     iframe {
-        width: 300px;
+        width: 270px;
         height: 160px;
     }
-    .card {
-        width: 400px;
-    }
-}
+  }
