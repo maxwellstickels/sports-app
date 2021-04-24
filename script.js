@@ -102,7 +102,7 @@ function displayPlayerResults() {
 
 function displayTeamResults() {
     var teamName = nameSearchTeam.value.trim().toLowerCase();
-    if (teamName.length > 2) { // This condition sets minimum input length requirement - set it to -1 if you don't care about minimum length.
+    if (teamName.length > 0) { // This condition sets minimum input length requirement - set it to -1 if you don't care about minimum length.
         teamResults.innerHTML = ""; // Clears team results
         // Fetches full list of current season's teams
         fetch("https://lookup-service-prod.mlb.com/json/named.team_all_season.bam?sport_code='mlb'&all_star_sw='N'&sort_order=name_asc&season='2021'").then(function(response) {
@@ -119,9 +119,9 @@ function displayTeamResults() {
                         teamCard.setAttribute("style", "margin: 10px 0; width: 50%;");
                         // Gets the team's home city and full name, links website if it exists
                         var teamNameDisplay = document.createElement('p');
-                        if (infoT[i].website_url != "") {
+                        if (infoT[i].base_url != "") {
                             var teamLink = document.createElement('a');
-                            teamLink.setAttribute("href", "https://www." + infoT[i].website_url);
+                            teamLink.setAttribute("href", "https://www." + infoT[i].base_url);
                             teamLink.textContent = infoT[i].name_display_full;
                             teamNameDisplay.appendChild(teamLink);
                         }
@@ -131,14 +131,24 @@ function displayTeamResults() {
                         teamNameDisplay.innerHTML += " | " + infoT[i].city + ", " + infoT[i].state;
                         // Gets the team's phone number, if it exists
                         var teamPhone = document.createElement('p');
-                        if (infoT[i].phone_number.length < 3) {
+                        if (infoT[i].phone_number == "") {
                             teamPhone.textContent = "Phone Number: N/A"
                         }
                         else {
                             teamPhone.textContent = "Phone Number: " + infoT[i].phone_number;
                         }
+                        // Gets the team's venue name, if it exists (hint: it probably does)
+                        var teamVenue = document.createElement('p');
+                        if (infoT[i].venue == "") {
+                            teamVenue.textContent = "Venue: N/A"
+                        }
+                        else {
+                            teamVenue.textContent = "Venue: " + infoT[i].venue_name;
+                        }
                         teamCard.appendChild(teamNameDisplay);
                         teamCard.appendChild(teamPhone);
+                        console.log(teamPhone.textContent);
+                        teamCard.appendChild(teamVenue);
                         teamResults.appendChild(teamCard);
                     }
                 }
