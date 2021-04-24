@@ -121,7 +121,7 @@ function displayTeamResults() {
                         var teamNameDisplay = document.createElement('p');
                         if (infoT[i].website_url != "") {
                             var teamLink = document.createElement('a');
-                            teamLink.setAttribute("href", "https://" + infoT[i].website_url);
+                            teamLink.setAttribute("href", "https://www." + infoT[i].website_url);
                             teamLink.textContent = infoT[i].name_display_full;
                             teamNameDisplay.appendChild(teamLink);
                         }
