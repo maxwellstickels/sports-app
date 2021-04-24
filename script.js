@@ -42,7 +42,7 @@ function fetchPlayerStats(id) {
             playerLink.textContent = "#" + jerseyNum + ": " + info2.name_first + nickName + info2.name_last;
             playerName.appendChild(playerLink);
         }
-        var teamName = document.createElement('ol');
+        var teamName = document.createElement('p');
         teamName.textContent = "Team: " + info2.team_name + " " + "Position: " + info2.primary_position_txt;
         // Adds batting stats to screen
         fetch("https://lookup-service-prod.mlb.com/json/named.sport_career_hitting.bam?league_list_id='mlb'&game_type='R'&player_id=\'" + id + "\'").then(function(response3) {
@@ -101,17 +101,45 @@ function displayPlayerResults() {
 }
 
 function displayTeamResults() {
-    var teamName = nameSearchTeam.value.trim();
+    var teamName = nameSearchTeam.value.trim().toLowerCase();
     if (teamName.length > 2) { // This condition sets minimum input length requirement - set it to -1 if you don't care about minimum length.
         teamResults.innerHTML = ""; // Clears team results
+        // Fetches full list of current season's teams
         fetch("https://lookup-service-prod.mlb.com/json/named.team_all_season.bam?sport_code='mlb'&all_star_sw='N'&sort_order=name_asc&season='2021'").then(function(response) {
             return response.json();}).then(function(data) {
             if (data.team_all_season != undefined) {
                 infoT = data.team_all_season.queryResults.row;
+                console.log(infoT);
                 for (var i = 0; i < infoT.length; i++) {
                     // Checks if input is part of any possible name for the team
                     if (infoT[i].name_display_full.toLowerCase().includes(teamName) || infoT[i].name_display_long.toLowerCase().includes(teamName) || infoT[i].name_display_short.toLowerCase().includes(teamName) || infoT[i].name_display_brief.toLowerCase().includes(teamName) || infoT[i].mlb_org_abbrev.toLowerCase().includes(teamName)) {
                         console.log(infoT[i].name_display_full);
+                        var teamCard = document.createElement('section'); // playerCard is border around all player info
+                        teamCard.setAttribute("class", "card");
+                        teamCard.setAttribute("style", "margin: 10px 0; width: 50%;");
+                        // Gets the team's home city and full name, links website if it exists
+                        var teamNameDisplay = document.createElement('p');
+                        if (infoT[i].website_url != "") {
+                            var teamLink = document.createElement('a');
+                            teamLink.setAttribute("href", "https://" + infoT[i].website_url);
+                            teamLink.textContent = infoT[i].name_display_full;
+                            teamNameDisplay.appendChild(teamLink);
+                        }
+                        else {
+                            teamNameDisplay.textContent = infoT[i].name_display_full;
+                        }
+                        teamNameDisplay.innerHTML += " | " + infoT[i].city + ", " + infoT[i].state;
+                        // Gets the team's phone number, if it exists
+                        var teamPhone = document.createElement('p');
+                        if (infoT[i].phone_number.length < 3) {
+                            teamPhone.textContent = "Phone Number: N/A"
+                        }
+                        else {
+                            teamPhone.textContent = "Phone Number: " + infoT[i].phone_number;
+                        }
+                        teamCard.appendChild(teamNameDisplay);
+                        teamCard.appendChild(teamPhone);
+                        teamResults.appendChild(teamCard);
                     }
                 }
             }
