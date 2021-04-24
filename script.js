@@ -8,6 +8,8 @@ var playerResults = document.getElementById("player-stats-display");
 var teamResults = document.getElementById("team-stats-display");
 var playerDropDown = document.getElementById("player-history");
 var teamDropDown = document.getElementById("team-history");
+var videoBtn = document.getElementById("video-btn");
+var testVideoArea = document.getElementById("test-video-area");
 var info; // for getting player ID by name
 var info2; // for getting player team affiliation, jersey #, etc. by ID
 var playerSearchHistory = JSON.parse(localStorage.getItem("playerSearchHistory"));
@@ -20,10 +22,27 @@ if(teamSearchHistory === null){
     teamSearchHistory = [];
 }
 
-function youtubesetup() {
-    gapi.client.setApiKey("AIzaSyDW3t-myU9L1Q-P2Mw8SqbKDS2WSdbnMX0");
+function getVideo(team) {
+    var searchTerm = team.name_display_full + " mlb";
+    console.log("getVideo() happened!");
+    var call = gapi.client.youtube.search.list({
+        part: "id,snippet",
+        q: searchTerm.replace(/%20/g, "+"),
+        type: "video",
+        order: "viewCount",
+        maxResults: "1",
+
+    });
+    call.execute(function(response) {
+        var video = response.result;
+        console.log(video);
+    });
+}
+
+function youtubeSetup() {
+    console.log(gapi.client.setApiKey("AIzaSyDW3t-myU9L1Q-P2Mw8SqbKDS2WSdbnMX0"));
     gapi.client.load("youtube", "v3", function() {
-        // console.log("Success!");
+        // Let's see if this does it
     });
 }
 
@@ -183,6 +202,7 @@ function displayTeamResults() {
 
 submitBtn.addEventListener("click", displayPlayerResults);
 submitBtnTeam.addEventListener("click", displayTeamResults);
+videoBtn.addEventListener("click", getVideo);
 showSearchHistories();
 
 function showSearchHistories() {
