@@ -183,7 +183,7 @@ function displayTeamResults() {
 
 submitBtn.addEventListener("click", displayPlayerResults);
 submitBtnTeam.addEventListener("click", displayTeamResults);
-
+showSearchHistories();
 
 function showSearchHistories() {
     playerDropDown.innerHTML = "";
