@@ -11,7 +11,7 @@ var info2; // for getting player team affiliation, jersey #, etc. by ID
 function fetchPlayerStats(id) {
     var playerCard = document.createElement('section'); // playerCard is border around all player info
     playerCard.setAttribute("class", "card");
-    playerCard.setAttribute("style", "margin: 10px 0; width: 50%;");
+    playerCard.setAttribute("style", "margin: 10px 0; width: 90%;");
     var playerBatting = document.createElement('p');
     var playerPitching = document.createElement('p');
     fetch("https://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id=\'" + id + "\'").then(function(response2) {
@@ -116,12 +116,12 @@ function displayTeamResults() {
                         console.log(infoT[i].name_display_full);
                         var teamCard = document.createElement('section'); // playerCard is border around all player info
                         teamCard.setAttribute("class", "card");
-                        teamCard.setAttribute("style", "margin: 10px 0; width: 50%;");
+                        teamCard.setAttribute("style", "margin: 10px 0; width: 90%;");
                         // Gets the team's home city and full name, links website if it exists
                         var teamNameDisplay = document.createElement('p');
                         if (infoT[i].base_url != "") {
                             var teamLink = document.createElement('a');
-                            teamLink.setAttribute("href", "https://www." + infoT[i].base_url);
+                            teamLink.setAttribute("href", "http://www." + infoT[i].base_url);
                             teamLink.textContent = infoT[i].name_display_full;
                             teamNameDisplay.appendChild(teamLink);
                         }
