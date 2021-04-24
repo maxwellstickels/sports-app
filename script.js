@@ -4,9 +4,20 @@ var submitBtn = document.getElementById("submit-btn");
 var submitBtnTeam = document.getElementById("submit-btn-team");
 var playerResults = document.getElementById("player-stats-display");
 var teamResults = document.getElementById("team-stats-display");
+var playerDropDown = document.getElementById("player-history");
+var teamDropDown = document.getElementById("team-history");
 var info; // for getting player ID by name
 var info2; // for getting player team affiliation, jersey #, etc. by ID
+var playerSearchHistory = JSON.parse(localStorage.getItem("playerSearchHistory"));
+var teamSearchHistory = JSON.parse(localStorage.getItem("teamSearchHistory"));
 
+if(playerSearchHistory === null) {
+    playerSearchHistory = [];
+}
+
+if(teamSearchHistory === null){
+    teamSearchHistory = [];
+}
 // Given a player ID, renders information to screen corresponding that the player with that ID.
 function fetchPlayerStats(id) {
     var playerCard = document.createElement('section'); // playerCard is border around all player info
@@ -81,6 +92,9 @@ function fetchPlayerStats(id) {
 
 function displayPlayerResults() {
     if (nameSearch.value.length > 0) { // This condition sets minimum input length requirement - set it to -1 if you don't care about minimum length.
+        playerSearchHistory.unshift(nameSearch.value);
+        localStorage.setItem("playerSearchHistory", JSON.stringify(playerSearchHistory));
+        showSearchHistories();
         playerResults.innerHTML = ""; // Clears player results
         fetch("https://lookup-service-prod.mlb.com/json/named.search_player_all.bam?sport_code='mlb'&active_sw='Y'&name_part='" + nameSearch.value + "%25'").then(function(response) {
             return response.json();}).then(function(data) {
@@ -103,6 +117,9 @@ function displayPlayerResults() {
 function displayTeamResults() {
     var teamName = nameSearchTeam.value.trim().toLowerCase();
     if (teamName.length > 0) { // This condition sets minimum input length requirement - set it to -1 if you don't care about minimum length.
+        teamSearchHistory.unshift(nameSearchTeam.value);
+        localStorage.setItem("teamSearchHistory", JSON.stringify(teamSearchHistory));
+        showSearchHistories();
         teamResults.innerHTML = ""; // Clears team results
         // Fetches full list of current season's teams
         fetch("https://lookup-service-prod.mlb.com/json/named.team_all_season.bam?sport_code='mlb'&all_star_sw='N'&sort_order=name_asc&season='2021'").then(function(response) {
@@ -160,3 +177,25 @@ function displayTeamResults() {
 
 submitBtn.addEventListener("click", displayPlayerResults);
 submitBtnTeam.addEventListener("click", displayTeamResults);
+
+
+function showSearchHistories() {
+    playerDropDown.innerHTML = "";
+    teamDropDown.innerHTML = "";
+    var playerDefaultOption = document.createElement("option");
+        playerDefaultOption.textContent = "Search History";
+        playerDropDown.appendChild(playerDefaultOption);
+    var teamDefaultOption = document.createElement("option");
+        teamDefaultOption.textContent = "Search History"
+        teamDropDown.appendChild(teamDefaultOption);    
+    for( var i = 0; i < playerSearchHistory.length; i++) {
+        var playerOption = document.createElement("option");
+        playerOption.textContent = playerSearchHistory[i];
+        playerDropDown.appendChild(playerOption);
+    }
+    for( var i = 0; i < teamSearchHistory.length; i++) {
+        var teamOption = document.createElement("option");
+        teamOption.textContent = teamSearchHistory[i];
+        teamDropDown.appendChild(teamOption);
+    }
+}
