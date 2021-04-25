@@ -23,8 +23,8 @@ if(teamSearchHistory === null){
 }
 
 function getVideo(team) {
-    var searchTerm = team.name_display_full + " mlb";
-    console.log("getVideo() happened!");
+    var searchTerm = "mlb";
+    //var searchTerm = team.name_display_full + " mlb";
     var call = gapi.client.youtube.search.list({
         part: "id,snippet",
         q: searchTerm.replace(/%20/g, "+"),
@@ -39,10 +39,18 @@ function getVideo(team) {
     });
 }
 
-function youtubeSetup() {
-    console.log(gapi.client.setApiKey("AIzaSyDW3t-myU9L1Q-P2Mw8SqbKDS2WSdbnMX0"));
-    gapi.client.load("youtube", "v3", function() {
-        // Let's see if this does it
+function initClient() {
+    gapi.client.init({
+        'apiKey': "AIzaSyDW3t-myU9L1Q-P2Mw8SqbKDS2WSdbnMX0"
+    });
+}
+
+function init() {
+    gapi.load('client', initClient).then(function() {
+        gapi.client.setApiKey("AIzaSyDW3t-myU9L1Q-P2Mw8SqbKDS2WSdbnMX0");
+        gapi.client.load("youtube", "v3", function() {
+        getVideo();
+        });
     });
 }
 
@@ -199,19 +207,6 @@ function displayTeamResults(teamName) {
     }
 }
 
-submitBtn.addEventListener("click", displayPlayerResults);
-submitBtnTeam.addEventListener("click", displayTeamResults);
-submitBtn.addEventListener("click", function() {
-    var playerName = nameSearch.value;
-    displayPlayerResults(playerName);
-});
-submitBtnTeam.addEventListener("click", function() {
-    var teamName = nameSearchTeam.value.trim().toLowerCase();
-    displayTeamResults(teamName);
-});
-videoBtn.addEventListener("click", getVideo);
-showSearchHistories();
-
 function showSearchHistories() {
     playerDropDown.innerHTML = "";
     teamDropDown.innerHTML = "";
@@ -237,10 +232,25 @@ function showSearchHistories() {
     }
 }
 
+// Event-listeners
 playerDropDown.addEventListener("change", function(event) {
     displayPlayerResults(event.target.value);
 })
-
 teamDropDown.addEventListener("change", function(event) {
     displayTeamResults(event.target.value);
 })
+submitBtn.addEventListener("click", displayPlayerResults);
+submitBtnTeam.addEventListener("click", displayTeamResults);
+submitBtn.addEventListener("click", function() {
+    var playerName = nameSearch.value;
+    displayPlayerResults(playerName);
+});
+submitBtnTeam.addEventListener("click", function() {
+    var teamName = nameSearchTeam.value.trim().toLowerCase();
+    displayTeamResults(teamName);
+});
+videoBtn.addEventListener("click", getVideo);
+
+// On-load function calls:
+init();
+showSearchHistories();
