@@ -45,13 +45,20 @@ function initClient() {
     });
 }
 
-function init() {
-    gapi.load('client', initClient).then(function() {
-        gapi.client.setApiKey("AIzaSyDW3t-myU9L1Q-P2Mw8SqbKDS2WSdbnMX0");
-        gapi.client.load("youtube", "v3", function() {
-        getVideo();
-        });
+function init1() {
+    gapi.load('client', initClient);
+}
+
+function init2() {
+    gapi.client.setApiKey("AIzaSyDW3t-myU9L1Q-P2Mw8SqbKDS2WSdbnMX0");
+    gapi.client.load("youtube", "v3", function() {
+    getVideo();
     });
+}
+
+function init() {
+    var prom = new Promise ((resolve) => {resolve(initClient)});
+    prom.then(init2);
 }
 
 // Given a player ID, renders information to screen corresponding that the player with that ID.
